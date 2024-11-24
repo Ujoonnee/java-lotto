@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -27,6 +29,24 @@ public class InputView {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("구매 금액은 숫자만 입력 가능합니다.");
         }
+    }
+
+    public Integer askManualPurchaseAmount() {
+        System.out.println("수동으로 구매할 로또 수를 입력해 주세요.");
+
+        return SCANNER.nextInt();
+    }
+
+    public List<String> askManualPurchaseNumbers(int amount) {
+        System.out.println("수동으로 구매할 번호를 입력해 주세요.");
+
+        ArrayList<String> manualNumbers = new ArrayList<>();
+
+        for (int i = 0; i < amount; i++) {
+            manualNumbers.add(SCANNER.nextLine());
+        }
+
+        return manualNumbers;
     }
 
     public String askWinnerLottoNumber() {
