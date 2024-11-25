@@ -30,24 +30,4 @@ public class WinningLotto {
                         rank -> Collections.frequency(rankForGames, rank))
                 );
     }
-
-    public double calculateEarningRate(Games games) {
-        double rate = (double) calculatePrize(games) / games.count() / LottoNumbers.PRICE;
-
-        int decimalPlaces = 2;
-        double decimalPlacesCorrectionValue = Math.pow(10, decimalPlaces);
-
-        return Math.round(rate * decimalPlacesCorrectionValue) / decimalPlacesCorrectionValue;
-    }
-
-    private long calculatePrize(Games games) {
-        return countPerRank(games).entrySet()
-                .stream()
-                .map(entry -> {
-                    Rank rank = entry.getKey();
-                    Integer count = entry.getValue();
-                    return (long) rank.wins() * count;
-                })
-                .reduce(0L, Long::sum);
-    }
 }

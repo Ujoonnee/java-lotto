@@ -14,8 +14,40 @@ import static lotto.domain.Rank.NONE;
 import static lotto.domain.Rank.SECOND;
 import static lotto.domain.Rank.THIRD;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class LottoResultTest {
+
+    @ParameterizedTest
+    @MethodSource("frequencyAndEarningRate")
+    void 전체_게임에_대한_수익률을_구할_수_있다(int fifth, int none, double expected) {
+        LottoResult lottoResult = new LottoResult(Map.of(
+                FIRST, 0,
+                SECOND, 0,
+                THIRD, 0,
+                FOURTH, 0,
+                FIFTH, fifth,
+                NONE, none
+        ));
+
+        assertThat(lottoResult.getEarningRate()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> frequencyAndEarningRate() {
+        double twice = 2.00;
+        double breakEven = 1.00;
+        double twoThird = 0.67;
+        double half = 0.50;
+        double oneThird = 0.33;
+
+        return Stream.of(
+                arguments(2, 3, twice),
+                arguments(1, 4, breakEven),
+                arguments(2, 13, twoThird),
+                arguments(1, 9, half),
+                arguments(1, 14, oneThird)
+        );
+    }
 
     @ParameterizedTest
     @MethodSource("rankAndFrequency")
@@ -42,4 +74,5 @@ class LottoResultTest {
                 Arguments.arguments(NONE, 6)
         );
     }
+
 }

@@ -57,41 +57,4 @@ class WinningLottoTest {
                 arguments(new Games(List.of(new LottoNumbers("1,2,7,8,9,10"))), Rank.NONE, 1)
         );
     }
-
-    @ParameterizedTest
-    @MethodSource("gamesAndEarningRate")
-    void 전체_게임에_대한_수익률을_구할_수_있다(Games games, double expected) {
-        LottoNumbers winner = new LottoNumbers("1,2,3,4,5,6");
-        WinningLotto lottoResult = new WinningLotto(winner, "7");
-
-        assertThat(lottoResult.calculateEarningRate(games)).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> gamesAndEarningRate() {
-        double twice = 2.00;
-        double breakEven = 1.00;
-        double twoThird = 0.67;
-        double half = 0.50;
-        double oneThird = 0.33;
-
-        return Stream.of(
-                arguments(new Games(getFifthAndNoneGame(2, 3)), twice),
-                arguments(new Games(getFifthAndNoneGame(1, 4)), breakEven),
-                arguments(new Games(getFifthAndNoneGame(2, 13)), twoThird),
-                arguments(new Games(getFifthAndNoneGame(1, 9)), half),
-                arguments(new Games(getFifthAndNoneGame(1, 14)), oneThird)
-        );
-    }
-
-    private static List<LottoNumbers> getFifthAndNoneGame(int fifthCount, int noneCount) {
-        List<LottoNumbers> fourthGames = IntStream.range(0, fifthCount)
-                .mapToObj(i -> new LottoNumbers("1,2,3,7,8,9"))
-                .collect(Collectors.toList());
-        List<LottoNumbers> noneGames = IntStream.range(0, noneCount)
-                .mapToObj(i -> new LottoNumbers("1,2,7,8,9,10"))
-                .collect(Collectors.toList());
-        fourthGames.addAll(noneGames);
-
-        return fourthGames;
-    }
 }

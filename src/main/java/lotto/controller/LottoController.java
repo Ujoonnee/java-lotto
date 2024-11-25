@@ -23,7 +23,7 @@ public class LottoController {
 
         LottoNumbers winner = new LottoNumbers(inputView.askWinnerLottoNumber());
         WinningLotto winningLotto = new WinningLotto(winner, inputView.askBonusNumber());
-        LottoResult lottoResult = new LottoResult(winningLotto.countPerRank(games), winningLotto.calculateEarningRate(games));
+        LottoResult lottoResult = new LottoResult(winningLotto.countPerRank(games));
 
         outputView.printResult(lottoResult);
     }
