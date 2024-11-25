@@ -8,6 +8,12 @@ public class LottoMain {
 
     public static void main(String[] args) {
         LottoController lottoController = new LottoController(InputView.getInstance(), OutputView.getInstance());
-        lottoController.play();
+
+        try {
+            lottoController.play();
+
+        } catch(RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
