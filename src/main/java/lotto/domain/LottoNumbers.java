@@ -41,6 +41,17 @@ public class LottoNumbers {
         this.lottoNumbers = toLottoNumberSet(numbers);
     }
 
+    public LottoNumbers(int... numbers) {
+        Set<Integer> numberSet = new HashSet<>(numbers.length);
+        for (int number : numbers) {
+            numberSet.add(number);
+        }
+
+        validateCount(numberSet);
+
+        this.lottoNumbers = toLottoNumberSet(numberSet);
+    }
+
     private void validateCount(Set<Integer> numbers) {
         if (numbers == null || numbers.size() != NUMBER_OF_LOTTO_NUMBER) {
             throw new IllegalArgumentException("중복되지 않은 " + NUMBER_OF_LOTTO_NUMBER + "개의 로또번호가 필요합니다.");

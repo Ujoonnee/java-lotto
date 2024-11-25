@@ -20,7 +20,7 @@ class WinningLottoTest {
 
     @Test
     void 당첨번호_생성() {
-        LottoNumbers winningLottoNumbers = new LottoNumbers("1,2,3,4,5,6");
+        LottoNumbers winningLottoNumbers = new LottoNumbers(1, 2, 3, 4, 5, 6);
         String bonusNumber = "7";
 
         assertThatNoException().isThrownBy(() -> new WinningLotto(winningLottoNumbers, bonusNumber));
@@ -28,7 +28,7 @@ class WinningLottoTest {
 
     @Test
     void 당첨번호를_보너스번호로_사용할_수_없다() {
-        LottoNumbers winningLottoNumbers = new LottoNumbers("1,2,3,4,5,6");
+        LottoNumbers winningLottoNumbers = new LottoNumbers(1, 2, 3, 4, 5, 6);
         String bonusNumber = "1";
 
         assertThatIllegalArgumentException().isThrownBy(() -> new WinningLotto(winningLottoNumbers, bonusNumber))
@@ -38,7 +38,7 @@ class WinningLottoTest {
     @ParameterizedTest
     @MethodSource("gamesAndRank")
     void 구매한_게임에_대한_등수_빈도를_반환한다(Games games, Rank rank, Integer expected) {
-        LottoNumbers winningLottoNumbers = new LottoNumbers("1,2,3,4,5,6");
+        LottoNumbers winningLottoNumbers = new LottoNumbers(1, 2, 3, 4, 5, 6);
         String bonusNumber = "7";
 
         WinningLotto winningLotto = new WinningLotto(winningLottoNumbers, bonusNumber);
@@ -49,12 +49,12 @@ class WinningLottoTest {
 
     private static Stream<Arguments> gamesAndRank() {
         return Stream.of(
-                arguments(new Games(List.of(new LottoNumbers("1,2,3,4,5,6"))), Rank.FIRST, 1),
-                arguments(new Games(List.of(new LottoNumbers("1,2,3,4,5,7"))), Rank.SECOND, 1),
-                arguments(new Games(List.of(new LottoNumbers("1,2,3,4,5,8"))), Rank.THIRD, 1),
-                arguments(new Games(List.of(new LottoNumbers("1,2,3,4,7,8"))), Rank.FOURTH, 1),
-                arguments(new Games(List.of(new LottoNumbers("1,2,3,7,8,9"))), Rank.FIFTH, 1),
-                arguments(new Games(List.of(new LottoNumbers("1,2,7,8,9,10"))), Rank.NONE, 1)
+                arguments(new Games(List.of(new LottoNumbers(1, 2, 3, 4, 5, 6))), Rank.FIRST, 1),
+                arguments(new Games(List.of(new LottoNumbers(1, 2, 3, 4, 5, 7))), Rank.SECOND, 1),
+                arguments(new Games(List.of(new LottoNumbers(1, 2, 3, 4, 5, 8))), Rank.THIRD, 1),
+                arguments(new Games(List.of(new LottoNumbers(1, 2, 3, 4, 7, 8))), Rank.FOURTH, 1),
+                arguments(new Games(List.of(new LottoNumbers(1, 2, 3, 7, 8, 9))), Rank.FIFTH, 1),
+                arguments(new Games(List.of(new LottoNumbers(1, 2, 7, 8, 9, 10))), Rank.NONE, 1)
         );
     }
 }

@@ -29,7 +29,7 @@ class LottoNumberTest {
     @ParameterizedTest
     @ValueSource(strings = {"1", "2", "3", "4", "5", "6"})
     void 당첨번호는_보너스번호로_사용될_수_없다(String number) {
-        LottoNumbers winner = new LottoNumbers("1,2,3,4,5,6");
+        LottoNumbers winner = new LottoNumbers(1, 2, 3, 4, 5, 6);
 
         assertThatIllegalArgumentException().isThrownBy(() -> LottoNumber.bonusLottoNumberOf(number, winner))
                 .withMessage("보너스 번호는 당첨번호에 포함될 수 없습니다.");
