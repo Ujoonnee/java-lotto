@@ -7,44 +7,30 @@ import java.util.stream.Collectors;
 
 public class Games {
 
-    private final List<LottoNumbers> games;
+    private final AutoGames autoGames;
 
     public Games(int money) {
-        int numberOfGames = money / LottoNumbers.PRICE;
-
-        List<LottoNumbers> games = new ArrayList<>();
-        for (int i = 0; i < numberOfGames; i++) {
-            games.add(new LottoNumbers());
+        if (money < LottoNumbers.PRICE) {
+            throw new IllegalArgumentException("최소 " + LottoNumbers.PRICE + "원이 필요합니다.");
         }
-
-        if (games.isEmpty()) {
-            throw new IllegalArgumentException(String.format("최소 %d원이 필요합니다.", LottoNumbers.PRICE));
-        }
-
-        this.games = Collections.unmodifiableList(games);
+        this.autoGames = new AutoGames(money);
     }
 
     public Games(List<LottoNumbers> games) {
-        this.games = games;
+        this.autoGames = new AutoGames(games);
     }
 
     public int count() {
-        return games.size();
+        return autoGames.count();
     }
 
     public List<Rank> checkResult(LottoNumbers winner, LottoNumber bonusLottoNumber) {
-        return games.stream()
-                .map(game -> Rank.of(
-                        game.countIdenticalLottoNumberSet(winner),
-                        game.contains(bonusLottoNumber)
-                ))
-                .collect(Collectors.toUnmodifiableList());
+
+        return autoGames.checkResult(winner, bonusLottoNumber);
     }
 
     @Override
     public String toString() {
-        return games.stream()
-                .map(LottoNumbers::toString)
-                .collect(Collectors.joining("\n"));
+        return autoGames.toString();
     }
 }

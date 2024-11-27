@@ -36,4 +36,11 @@ public class AutoGames {
                 ))
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    @Override
+    public String toString() {
+        return games.stream()
+                .map(LottoNumbers::toString)
+                .collect(Collectors.joining("\n"));
+    }
 }
